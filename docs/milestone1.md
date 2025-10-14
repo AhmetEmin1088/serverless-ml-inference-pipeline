@@ -1,35 +1,33 @@
-# Milestone 1 — Serverless ML Inference Pipeline
+# Milestone 1 — Progress Report  
+**Project:** Serverless Machine Learning Inference Pipeline  
+**Course:** ECE 6210 – Machine Intelligence (Fall 2025)  
+**Team:** Machine Minds  
+**Members:** [Ahmet Emin Yilmaz], [Munashe C Kabuya], [Allen Tinashe Maraire]  
+**Date:** October 15, 2025  
 
-## Team
+## 1. Current Problem Formulation
 
-- Person A: ...
-- Person B: ...
-- Person C: ...
+Traditional machine learning deployments rely on servers that must stay online even when models are idle. This leads to high maintenance costs and inefficient resource use, especially for small teams and research projects.  
+Our project proposes a **serverless machine learning inference pipeline** that uses **AWS Lambda** and **S3** to dynamically load and execute a trained model on demand.  
 
-## Goal
+We are using **ResNet18**, a convolutional neural network (CNN) for image classification, exported to **ONNX** format for compatibility with cloud runtimes. The goal is to achieve cost-efficient, fully managed ML inference without maintaining servers.
 
-Export ResNet18 to ONNX, upload to S3, implement Lambda that downloads the model and runs (test).
+## 2. Progress So Far
 
-## Files
+### Model Setup  
+- Implemented and tested ResNet18 with the CIFAR-10 dataset locally using PyTorch.  
+- Exported the trained model to ONNX format (`resnet18.onnx`).  
+- Verified model inference locally using ONNX Runtime.
 
-- src/export_resnet_onnx.py
-- src/onnx_inference_test.py
-- src/lambda_infer_from_s3.py
+### Cloud Infrastructure  
+- Created an AWS S3 bucket (`s3://machine-minds-models-2025`) and uploaded the ONNX model.  
+- Configured AWS IAM roles with the **AWSLambdaBasicExecutionRole** policy.  
+- Developed and deployed a Lambda function (`serverless_resnet_test`) that downloads the ONNX model from S3 to `/tmp`.  
+- Increased Lambda timeout to 60s to handle large file transfers.  
+- Verified successful model download:  
 
-## Steps Completed
-
-1. Exported model to resnet18.onnx (size: XX MB). (Person A)
-2. Uploaded resnet18.onnx to s3://machine-minds-models-<unik>/ (Person B)
-3. Lambda function `serverless_resnet_test` created and downloads model to /tmp (Person B)
-4. Local ONNX inference validated (Person A)
-
-## Test Results
-
-- Local inference output: <screenshot or console text>
-- Lambda console invoke result: Execution succeeded (attached screenshot)
-- CloudWatch logs: (link or screenshot)
-
-## Next steps
-
-- Integrate onnxruntime into Lambda package / layer and implement full inference.
-- Add API Gateway for external access.
+  ```json
+  {
+    "statusCode": 200,
+    "body": "Model downloaded successfully to /tmp/resnet18.onnx"
+  }
