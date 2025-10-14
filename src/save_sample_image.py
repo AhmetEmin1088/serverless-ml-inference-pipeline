@@ -7,7 +7,6 @@ import os
 transform = transforms.Compose([transforms.ToTensor()])
 testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
 
-# İlk resmi al
 img, label = testset[0]
 os.makedirs("data", exist_ok=True)
 Image.fromarray((img.permute(1, 2, 0).numpy() * 255).astype("uint8")).save("./data/sample.png")
