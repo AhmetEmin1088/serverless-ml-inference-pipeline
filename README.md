@@ -45,6 +45,7 @@ Lambda verified to download the model successfully to `/tmp`
 ## Team
 
 **Team Name:** Machine Minds
+
 **Members:**
 
 - Ahmet Emin Yilmaz
