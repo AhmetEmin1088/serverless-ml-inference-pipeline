@@ -14,8 +14,5 @@ RUN pip install --no-cache-dir numpy==1.26.4 onnxruntime==1.16.3 pillow torch to
 # Copy function code into the Lambda task root
 COPY src/ ${LAMBDA_TASK_ROOT}/
 
-# Ensure large model files aren't baked into image
-# (models will be downloaded dynamically from S3 at runtime)
-
 # Set the Lambda handler
 CMD ["lambda_handler.lambda_handler"]

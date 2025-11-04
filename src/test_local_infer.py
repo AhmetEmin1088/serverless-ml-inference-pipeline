@@ -1,5 +1,5 @@
 import json, time
-from lambda_handler import lambda_handler  # senin handler dosyanın adı
+from lambda_handler import lambda_handler
 
 def load_event(path="data/test_event.json"):
     import json
