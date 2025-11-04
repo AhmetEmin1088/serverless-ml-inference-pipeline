@@ -1,0 +1,11 @@
+# Core inference dependencies
+onnxruntime==1.16.3
+numpy==1.26.4
+pillow==10.2.0
+
+# Optional utilities
+torchvision==0.18.0  # for preprocessing transforms (Resize, Normalize, etc.)
+
+# AWS SDK (optional for local test)
+boto3==1.34.20
+

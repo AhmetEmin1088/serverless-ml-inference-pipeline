@@ -1,0 +1,1 @@
+{"statusCode": 500, "body": "{\"error\": \"model load failed\", \"detail\": \"[ONNXRuntimeError] : 3 : NO_SUCHFILE : Load model from ./resnet18.onnx failed:Load model ./resnet18.onnx failed. File doesn't exist\"}"}
