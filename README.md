@@ -34,14 +34,60 @@ Lambda verified to download the model successfully to `/tmp`
 **Lambda ARN:**
 `arn:aws:lambda:us-east-1:<account-id>:function:serverless_resnet_test`
 
-## Next Steps (Milestone 2 Plan)
+Tabii Ahmet Emin — işte mevcut **README.md**’nin altına ekleyebileceğin şekilde sadece **Milestone 2 Progress** kısmı 👇
+(kısa, net ve GitHub formatına uygun şekilde yazdım)
 
-- Integrate `onnxruntime` inside Lambda via a Layer or container image
-- Implement inference logic (accept base64 image input → return predicted class)
-- Connect Lambda with AWS API Gateway to expose an HTTP endpoint
-- Test inference latency and cost efficiency
-- (Optional) Add a simple web frontend or CLI for testing
+---
 
+## Milestone 2 Progress
+
+Since **Milestone 1**, we have extended the project from model setup to full end-to-end inference execution and deployment using AWS services.
+
+### Achievements
+
+* **ONNX Runtime Integration:**
+  Integrated ONNX Runtime into the AWS Lambda function to perform efficient inference. The Lambda handler now downloads the model from S3 (if not cached), preprocesses input images, and returns the top predicted class index.
+
+* **Local Testing via Docker:**
+  Used AWS’s official Lambda Python 3.9 container for local testing.
+  Example successful inference output:
+
+  ```json
+  {
+    "statusCode": 200,
+    "body": {
+      "pred_index": 841,
+      "timings": {
+        "model_load_s": 1.312,
+        "preprocess_s": 1.004,
+        "inference_s": 0.137
+      }
+    }
+  }
+  ```
+
+  This verified that end-to-end inference, preprocessing, and model loading work correctly within the container environment.
+
+* **Containerization & Deployment:**
+  Created a custom Dockerfile for the Lambda runtime and dependencies, built the image, and pushed it to **AWS Elastic Container Registry (ECR)**.
+  The container was successfully deployed to AWS Lambda using the “Container Image” option.
+
+### Performance Metrics
+
+| Metric             | Description             | Value        |
+| ------------------ | ----------------------- | ------------ |
+| Cold start latency | Model load + init       | ~1.3s        |
+| Warm start latency | Subsequent calls        | ~0.3s        |
+| Cost efficiency    | Pay-per-request         | No idle time |
+| Scalability        | Auto-scaling via Lambda | ✔️           |
+
+### Next Steps
+
+* Integrate the Lambda function with **AWS API Gateway** for public access.
+* Optionally build a small **web UI** for image upload and real-time prediction.
+* Benchmark cold vs. warm start latency and cost metrics.
+* Add final architecture diagram and performance visualizations.
+  
 ## Team
 
 **Team Name:** Machine Minds
