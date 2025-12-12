@@ -23,7 +23,7 @@ def preprocess_image_bytes(image_bytes):
 
 def lambda_handler(event, context):
     # expect base64 image in JSON body: {"image_b64":"..."} OR S3 reference
-    bucket = "machine-minds-models-<unik>"
+    bucket = "machine-minds-models-2025"
     key = "resnet18.onnx"
     download_model(bucket, key)
     sess = rt.InferenceSession(MODEL_LOCAL_PATH)

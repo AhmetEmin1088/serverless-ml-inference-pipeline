@@ -1,18 +1,17 @@
-# Base image: AWS Lambda Python 3.9 runtime
-FROM public.ecr.aws/lambda/python:3.9
+FROM amazon/aws-lambda-python:3.9
 
-# Upgrade pip safely
-RUN python3.9 -m pip install --upgrade pip
+WORKDIR /var/task
 
-# Copy and install dependencies
-COPY src/requirements.txt /tmp/requirements.txt
+# Install Python deps
+COPY src/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
-# Install with version pins to avoid NumPy 2.x conflicts
-RUN pip install --no-cache-dir numpy==1.26.4 onnxruntime==1.16.3 pillow torch torchvision \
-    && pip install --no-cache-dir -r /tmp/requirements.txt --target "${LAMBDA_TASK_ROOT}"
+# Copy your handler code
+COPY src/lambda_handler.py ${LAMBDA_TASK_ROOT}/lambda_handler.py
 
-# Copy function code into the Lambda task root
-COPY src/ ${LAMBDA_TASK_ROOT}/
+# Copy model
+COPY src/resnet18.onnx ${LAMBDA_TASK_ROOT}/resnet18.onnx
 
-# Set the Lambda handler
+# COPY src/test_local_infer.py ${LAMBDA_TASK_ROOT}/test_local_infer.py
+
 CMD ["lambda_handler.lambda_handler"]
